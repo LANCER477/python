@@ -1,0 +1,7 @@
+# Дані для підключення БД
+host:localhost
+port : 3306
+ user :user_231 # логін
+ pass: pass_231 # пароль
+# БД за замовчанням
+scheme: server_231
