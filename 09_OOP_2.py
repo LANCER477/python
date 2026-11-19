@@ -40,14 +40,19 @@ class Point :
             else :
                 if isinstance(other[0], (int, float)) and \
                    isinstance(other[1], (int, float)) :
-                    return Point(
-                        self.x + other[0],
-                        self.y + other[1]
-                    )
+                    return Point(                 #
+                        self.x + other[0],        # Point + (1, 2)
+                        self.y + other[1]         # Point + [1, 2]
+                    )                             #
                 else :
-                    raise TypeError("invalid content: only 'int' and 'float' available")
+                    raise TypeError("invalid content: only 'int' or 'float' available")
+        elif isinstance(other, dict) : # задача: реалізувати додавання з {'x': 5}, {'y': 7}, {'x': 5, 'y': 7}
+            if 'x' in other or 'y' in other :
+                pass
+            else :
+                raise TypeError("dict must contain 'x' or 'y'")
         else :
-            raise TypeError(f"unsupported operand type(s) for +: 'Point' and '{type(other)}'")
+            raise TypeError(f"unsupported operand type(s) for +: 'Point' and '{type(other).__name__}'")
 
 
 
@@ -64,6 +69,12 @@ def main() :
     print("p + (1,2) = ", p + (1,2))
     print("p + [1,2] = ", p + [1,2])
     try: print("p + [1,] = ", p + [1,])
+    except TypeError as err: print(err)
+    try: print("p + [1, 2, 3] = ", p + [1, 2, 3])
+    except TypeError as err: print(err)
+    try: print("p + [1, '2'] = ", p + [1, '2'])
+    except TypeError as err: print(err)
+    try: print("p + 'str' = ", p + 'str')
     except TypeError as err: print(err)
 
 
