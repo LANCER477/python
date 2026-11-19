@@ -59,6 +59,12 @@ def main() :
     p = Point(y=30)             # так і за іменем
     print(p)                    # 10 30
     print("p + p = ", p + p)
+    print("p + 2 = ", p + 2)
+    print("p + 2.5 = ", p + 2.5)
+    print("p + (1,2) = ", p + (1,2))
+    print("p + [1,2] = ", p + [1,2])
+    try: print("p + [1,] = ", p + [1,])
+    except TypeError as err: print(err)
 
 
 if __name__ == '__main__' :
