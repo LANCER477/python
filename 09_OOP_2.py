@@ -48,9 +48,17 @@ class Point :
                     raise TypeError("invalid content: only 'int' or 'float' available")
         elif isinstance(other, dict) : # задача: реалізувати додавання з {'x': 5}, {'y': 7}, {'x': 5, 'y': 7}
             if 'x' in other or 'y' in other :
-                pass
+                return Point(
+                    self.x + other.get('x', 0),
+                    self.y + other.get('y', 0)
+                )
             else :
-                raise TypeError("dict must contain 'x' or 'y'")
+                raise TypeError("dict must have at least one from 'x' or 'y' keys")
+        elif isinstance(other, complex) :  # (x,y) + a+jb = (x+a, y+b)
+            return Point (
+                self.x + other.real,
+                self.y + other.imag
+            )
         else :
             raise TypeError(f"unsupported operand type(s) for +: 'Point' and '{type(other).__name__}'")
 
@@ -76,6 +84,11 @@ def main() :
     except TypeError as err: print(err)
     try: print("p + 'str' = ", p + 'str')
     except TypeError as err: print(err)
+    print("p + {'y': 5} = ", p + {'y': 5})
+    print("p + {'x': 5,'y': 5} = ", p + {'x': 5,'y': 5})
+    try: print("p + {'z': 5} = ", p + {'z': 5})
+    except TypeError as err: print(err)
+    print("p + (3+5j) = ", p + (3+5j))
 
 
 if __name__ == '__main__' :
