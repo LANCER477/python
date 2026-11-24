@@ -37,17 +37,24 @@ class NbuRate :
     },
     '''
 
-    def __init__(self, r030:int, txt:str, rate:float):
+    def __init__(self, r030:int, txt:str, rate:float, cc:str, exchangedate:str, special:str):
         self.r030 = r030
         self.txt = txt
         self.rate = rate
+        self.cc = cc
+        self.exchangedate = exchangedate
+        self.special = special
+
 
 
 
 def main() :
     response = requests.get(nbu_url)
     data = response.json()
-    print(type(data))
+    print("Loaded", len(data), "rates")
+    rate = NbuRate(data[0]["r030"], data[0]["txt"],data[0]["rate"],data[0]["cc"],
+                   data[0]["exchangedate"],data[0]["special"])
+    print(rate)
 
 
 if __name__ == "__main__":
