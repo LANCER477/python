@@ -46,6 +46,10 @@ class NbuRate :
         self.special = special
 
 
+    def __str__(self):
+        return "%s (%s): %f UAH" % (self.cc, self.txt, self.rate)
+
+
 
 
 def main() :
