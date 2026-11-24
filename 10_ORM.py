@@ -37,10 +37,17 @@ class NbuRate :
     },
     '''
 
+    def __init__(self, r030:int, txt:str, rate:float):
+        self.r030 = r030
+        self.txt = txt
+        self.rate = rate
+
+
 
 def main() :
     response = requests.get(nbu_url)
     data = response.json()
+    print(type(data))
 
 
 if __name__ == "__main__":
