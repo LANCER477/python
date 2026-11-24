@@ -37,7 +37,8 @@ class NbuRate :
     },
     '''
 
-    def __init__(self, r030:int, txt:str, rate:float, cc:str, exchangedate:str, special:str):
+    def __init__(self, nbu_rate:dict|None,
+                 r030:int, txt:str, rate:float, cc:str, exchangedate:str, special:str):
         self.r030 = r030
         self.txt = txt
         self.rate = rate
