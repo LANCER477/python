@@ -37,14 +37,22 @@ class NbuRate :
     },
     '''
 
-    def __init__(self, nbu_rate:dict|None,
-                 r030:int, txt:str, rate:float, cc:str, exchangedate:str, special:str):
-        self.r030 = r030
-        self.txt = txt
-        self.rate = rate
-        self.cc = cc
-        self.exchangedate = exchangedate
-        self.special = special
+    def __init__(self, nbu_rate:dict|None = None,
+                 r030:int = 0, txt:str = "", rate:float = 0.0, cc:str = "", exchangedate:str = "", special:str = ""):
+        if nbu_rate is not None :
+            self.r030 = nbu_rate['r030']
+            self.txt = nbu_rate['txt']
+            self.rate = nbu_rate['rate']
+            self.cc = nbu_rate['cc']
+            self.exchangedate = nbu_rate['exchangedate']
+            self.special = nbu_rate['special']
+        else :
+            self.r030 = r030
+            self.txt = txt
+            self.rate = rate
+            self.cc = cc
+            self.exchangedate = exchangedate
+            self.special = special
 
 
     def __str__(self):
@@ -57,8 +65,9 @@ def main() :
     response = requests.get(nbu_url)
     data = response.json()
     print("Loaded", len(data), "rates")
-    rate = NbuRate(data[0]["r030"], data[0]["txt"],data[0]["rate"],data[0]["cc"],
-                   data[0]["exchangedate"],data[0]["special"])
+    rate = NbuRate(None, **data[0])
+    print(rate)
+    rate = NbuRate(data[1])
     print(rate)
 
 
