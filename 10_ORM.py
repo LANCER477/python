@@ -22,10 +22,25 @@
 
 # pip install requests
 import requests
+nbu_url = "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json"
+
+
+class NbuRate :
+    '''
+    {
+        "r030": 840,
+        "txt": "Долар США",
+        "rate": 45.0811,
+        "cc": "USD",
+        "exchangedate": "24.11.2026",
+        "special": "N"
+    },
+    '''
 
 
 def main() :
-    pass
+    response = requests.get(nbu_url)
+    data = response.json()
 
 
 if __name__ == "__main__":
