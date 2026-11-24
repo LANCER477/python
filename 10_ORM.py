@@ -14,4 +14,19 @@
 # > &"C:\path-to-python\python.exe" -m venv .venv
 # Після встановлення оточення необхідно активувати.
 # > .venv/Scripts/Activate.ps1
+# (або відкрити новий термінал у VS Code, але
+# в тому, що воно дійсно активувалось,
+# у будь-якому разі
+# обов'язково
+# слід переконатись - за видом промпта).
+
 # pip install requests
+import requests
+
+
+def main() :
+    pass
+
+
+if __name__ == "__main__":
+    main()
