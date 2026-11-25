@@ -14,7 +14,7 @@ db_ini = {
     "port": 3306,
     "user": "user_231p",
     "password": "pass_231",
-    "database": "python_231",
+    "database": "python_2311",
     "charset": "utf8mb4",
     "collation": "utf8mb4_unicode_ci",
     "use_unicode": True
@@ -36,6 +36,17 @@ def connect_db() :
         print(err)
     else :
         print("Connection OK")
+
+
+def simple_query() :
+    if db_connection is None :
+        connect_db()
+        if db_connection is None :
+            print("simple_query() stopped due to no connection")
+            return
+
+    sql = "SELECT CURRENT_TIMESTAMP"
+
 
 def main():
     connect_db()
