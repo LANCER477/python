@@ -54,10 +54,24 @@ def prepared_query() :
     # Підготовлені запити - це запити які виконуються
     # у два етапи: підготовка, та виконання з передачею параметрів.
     # Реалізація - на рівні СУБД
+    # Параметри - аналогічно у cursor.execute
+    sql = "SELECT DATEDIFF(CURRENT_DATE, ?) AS DAYS"
+    try:
+        with db_connection.cursor(dictionary=True, prepared=True) as cursor:
+            cursor.execute(sql, ('2026-01-01',)) #
+            row = next(cursor)                   #
+            print(row)                           #
+            cursor.execute(sql, ('2026-11-01',)) #
+            row = next(cursor)                   #
+            print(row)                           #
+    except mysql.connector.Error as err :        #
+        print(err)
 
 
 def main():
     param_query()
+    print("--------")
+    prepared_query()
 
 
 if __name__ == "__main__":
