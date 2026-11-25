@@ -47,15 +47,15 @@ def simple_query() :
 
     sql = "SELECT CURRENT_TIMESTAMP"    #
     cursor = None
-    try :                               #
-        cursor = db_connection.cursor() # ~Statement (Java)
+    try :                               # з підключення формується курсор
+        cursor = db_connection.cursor() # (аналог Statement у Java),
         cursor.execute(sql)             # не розрізняються команди (з/без рез-тів)
-    except mysql.connector.Error as err : #
-        print(err)                      #
+    except mysql.connector.Error as err : # Імена колонок та їх дані передаються окремо
+        print(err)                      # Одержання даних - ітерація курсора
     else :                              #
-        print(cursor.column_names)      #
-        row = next(cursor)              #
-        print(row)                      #
+        print(cursor.column_names)      # ('CURRENT_TIMESTAMP',)
+        row = next(cursor)              # Дані автоматично типізуються
+        print(row)                      # (datetime.datetime(2026, 11, 25, ...),)
     finally :                           #
         if cursor is not None :
             cursor.close()
