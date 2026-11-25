@@ -83,13 +83,34 @@ def middle_query() :
 def name_conflicts() :
     '''Однаковість імен полів може спричинити проблеми, пов'язані з
     появою однакових ключів словника. Яка буде поведінка у цьому разі?'''
-    pass
+    if db_connection is None :
+        connect_db()
+        if db_connection is None :
+            print("name_conflicts() stopped due to no connection")
+            return
+
+    sql = "SELECT UUID(), UUID()"        # формуємо два поля з однаковими
+    try :                                # іменами (не даємо імен)
+        with db_connection.cursor(
+            dictionary=True
+        ) as cursor:
+            cursor.execute(sql)
+            for row in cursor:           # у словнику буде лише один ключ
+                print(row)               # (відбувається перезапис)
+        with db_connection.cursor() as cursor:
+            cursor.execute(sql)
+            print(cursor.column_names)
+            for row in cursor:
+                print(row)
+    except mysql.connector.Error as err :
+        print(err)
 
 
 def main():
     # connect_db()
     simple_query()
     middle_query()
+    name_conflicts()
 
 
 if __name__ == "__main__":
