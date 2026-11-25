@@ -19,6 +19,20 @@ db_ini = {
     "collation": "utf8mb4_unicode_ci",
     "use_unicode": True
 }
+# Схема роботи з СУБД: підключення - команда - результати
+# Підключення встановлюється один раз і замінюється тільки
+# через розрив каналу (непланово)
+# Команди (і результати) перестворюються. Не рекомендується
+# повторно використовувати команду для нових задач.
+# Через постійність підключення реалізується як статичне поле
+# або глобальна змінна
+db_connection = None
+
+def connect_db() :
+    try :
+        db_connection = mysql.connector.connect(**db_ini)
+    except mysql.connector.Error as err :
+        print(err)
 
 def main():
     pass
