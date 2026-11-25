@@ -33,6 +33,8 @@ def connect_db() :
         db_connection = mysql.connector.connect(**db_ini)
     except mysql.connector.Error as err :
         print(err)
+    else :
+        print("Connection OK")
 
 def main():
     pass
