@@ -68,14 +68,22 @@ def middle_query() :
             print("middle_query() stopped due to no connection")
             return
 
-    sql = "SELECT UUID() UNION SELECT UUID()"
-    try :
-        with db_connection.cursor() as cursor:
-            cursor.execute(sql)
-            for row in cursor:
-                print(row)
-    except mysql.connector.Error as err :
-        print(err)
+    sql = "SELECT UUID() UNION SELECT UUID()" # Рекомендований спосіб роботи з
+    try :                                     # ресурсами - with. Це, зокрема,
+        with db_connection.cursor(            # дозволяє створити загальний try
+            dictionary=True                   # до якого буде передаватись і
+        ) as cursor:                          # виняток Unread result found
+            cursor.execute(sql)               # Параметр dictionary=True
+            for row in cursor:                # налаштовує курсор на формування
+                print(row)                    # dict з іменами полів у запиті
+    except mysql.connector.Error as err :     # Цикл for дозволяє повну ітерацію
+        print(err)                            # результатів запиту
+
+
+def name_conflicts() :
+    '''Однаковість імен полів може спричинити проблеми, пов'язані з
+    появою однакових ключів словника. Яка буде поведінка у цьому разі?'''
+    pass
 
 
 def main():
