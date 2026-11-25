@@ -45,11 +45,25 @@ def simple_query() :
             print("simple_query() stopped due to no connection")
             return
 
-    sql = "SELECT CURRENT_TIMESTAMP"
+    sql = "SELECT CURRENT_TIMESTAMP"    #
+    cursor = None
+    try :                               #
+        cursor = db_connection.cursor() # ~Statement (Java)
+        cursor.execute(sql)             # не розрізняються команди (з/без рез-тів)
+    except mysql.connector.Error as err : #
+        print(err)                      #
+    else :                              #
+        print(cursor.column_names)      #
+        row = next(cursor)              #
+        print(row)                      #
+    finally :                           #
+        if cursor is not None :
+            cursor.close()
 
 
 def main():
     connect_db()
+    simple_query()
 
 
 if __name__ == "__main__":
