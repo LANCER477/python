@@ -89,21 +89,26 @@ def name_conflicts() :
             print("name_conflicts() stopped due to no connection")
             return
 
-    sql = "SELECT UUID(), UUID()"        # формуємо два поля з однаковими
-    try :                                # іменами (не даємо імен)
+    sql = "SELECT 1 AS N, 2 AS N UNION SELECT 3 AS N, 4 AS N"
+    try :
         with db_connection.cursor(
-            dictionary=True
-        ) as cursor:
-            cursor.execute(sql)
-            for row in cursor:           # у словнику буде лише один ключ
-                print(row)               # (відбувається перезапис)
-        with db_connection.cursor() as cursor:
-            cursor.execute(sql)
-            print(cursor.column_names)
-            for row in cursor:
-                print(row)
-    except mysql.connector.Error as err :
-        print(err)
+            dictionary=True              # {'N': 2}
+        ) as cursor:                     # {'N': 4}
+            cursor.execute(sql)          # У підсумковому словнику буде лише одне значення
+            for row in cursor:           # Винятків немає, відбувається перезапис
+                print(row)               #
+        print("------------------------")
+        with db_connection.cursor() as cursor: # У варіанті без формування словника
+            cursor.execute(sql)                # формується кортеж з двох однакових імен
+            print(cursor.column_names)         # ('N', 'N')
+            for row in cursor:                 # Кортежі даних також подвійні
+                print(row)                     # (1, 2)
+    except mysql.connector.Error as err :      # (3, 4)
+        print(err)                             # В такому варіанті повертаються всі дані
+    '''Висновок: слід уникати однакових імен у запитах за умови,
+    що їх значення відрізняються. Якщо такого досягнути не вдається,
+    то не слід вживати параметр dictionary=True, а звертатись до
+    результатів за їх порядком'''
 
 
 def main():
