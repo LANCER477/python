@@ -20,25 +20,36 @@ def connect_db() :
         db_connection = mysql.connector.connect(**db_ini)
     except mysql.connector.Error as err :
         print(err)
+    else :
+        print("Connection OK")
 
 
-def parametrized_query() :
+def param_query() :
     if db_connection is None :
         connect_db()
         if db_connection is None :
-            print("simple_query() stopped due to no connection")
+            print("param_query() stopped due to no connection")
             return
     # Параметризовані запити - це запити, в яких
     # розділяються текст запиту та параметри до нього.
     # Реалізація - на рівні мови програмування
     # Краще підходять для одиничних запитів з параметрами
+    # ненадійного походження
+    sql = "SELECT DATEDIFF(CURRENT_DATE, %s) AS DAYS"
+    try:
+        with db_connection.cursor(dictionary=True) as cursor:
+            cursor.execute(sql, ('2026-01-01',))
+            row = next(cursor)
+            print(row)
+    except mysql.connector.Error as err :
+        print(err)
 
 
 def prepared_query() :
     if db_connection is None :
         connect_db()
         if db_connection is None :
-            print("simple_query() stopped due to no connection")
+            print("prepared_query() stopped due to no connection")
             return
     # Підготовлені запити - це запити які виконуються
     # у два етапи: підготовка, та виконання з передачею параметрів.
@@ -46,7 +57,7 @@ def prepared_query() :
 
 
 def main():
-    pass
+    param_query()
 
 
 if __name__ == "__main__":
