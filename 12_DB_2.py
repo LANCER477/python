@@ -38,10 +38,10 @@ def param_query() :
     sql = "SELECT DATEDIFF(CURRENT_DATE, %s) AS DAYS"
     try:
         with db_connection.cursor(dictionary=True) as cursor:
-            cursor.execute(sql, ('2026-01-01',))
-            row = next(cursor)
-            print(row)
-    except mysql.connector.Error as err :
+            cursor.execute(sql, ('2026-01-01',)) # ключ словника формується саме
+            row = next(cursor)                   # так, як зазначено у запиті.
+            print(row)                           # Перетворення case (розмір літер)
+    except mysql.connector.Error as err :        # не здійснюється
         print(err)
 
 
