@@ -29,6 +29,7 @@ db_ini = {
 db_connection = None
 
 def connect_db() :
+    global db_connection
     try :
         db_connection = mysql.connector.connect(**db_ini)
     except mysql.connector.Error as err :
@@ -37,7 +38,7 @@ def connect_db() :
         print("Connection OK")
 
 def main():
-    pass
+    connect_db()
 
 
 if __name__ == "__main__":
