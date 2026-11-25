@@ -14,7 +14,7 @@ db_ini = {
     "port": 3306,
     "user": "user_231p",
     "password": "pass_231",
-    "database": "python_2311",
+    "database": "python_231",
     "charset": "utf8mb4",
     "collation": "utf8mb4_unicode_ci",
     "use_unicode": True
