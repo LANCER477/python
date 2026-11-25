@@ -61,9 +61,27 @@ def simple_query() :
             cursor.close()
 
 
+def middle_query() :
+    if db_connection is None :
+        connect_db()
+        if db_connection is None :
+            print("middle_query() stopped due to no connection")
+            return
+
+    sql = "SELECT UUID() UNION SELECT UUID()"
+    try :
+        with db_connection.cursor() as cursor:
+            cursor.execute(sql)
+            for row in cursor:
+                print(row)
+    except mysql.connector.Error as err :
+        print(err)
+
+
 def main():
-    connect_db()
+    # connect_db()
     simple_query()
+    middle_query()
 
 
 if __name__ == "__main__":
